@@ -4,7 +4,7 @@ import {
     WinstonModule,
     utilities as nestWinstonModuleUtilities,
 } from 'nest-winston';
-import winston from 'winston';
+import * as winston from 'winston';
 
 export function NestOptions(): NestApplicationOptions {
     const configService = new ConfigService();
