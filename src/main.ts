@@ -2,9 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { CustomExceptionFilter } from './exception';
+import { NestOptions } from './app.options';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, NestOptions());
 
     // CustomExceptionFilter 설정
     app.useGlobalFilters(new CustomExceptionFilter());
