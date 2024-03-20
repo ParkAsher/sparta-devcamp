@@ -5,6 +5,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggingInterceptor } from './interceptors';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { addTransactionalDataSource } from 'typeorm-transactional';
+import { DataSource } from 'typeorm';
 
 @Module({
     imports: [
@@ -25,6 +27,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 synchronize: configService.get<string>('RUNTIME') !== 'prod', // 배포환경이 아니면 true
                 logging: configService.get<string>('RUNTIME') !== 'prod',
             }),
+            // typeorm의 엔티티들을 트랜잭션에서 사용할 수 있도록 datasource에 추가
+            async dataSourceFactory(options) {
+                if (!options) {
+                    throw new Error('Invalid options passed');
+                }
+                return addTransactionalDataSource(new DataSource(options));
+            },
         }),
     ],
     controllers: [AppController],
