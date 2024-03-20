@@ -49,6 +49,8 @@ export class CustomExceptionFilter implements ExceptionFilter {
             );
         }
 
+        console.log(exception);
+
         res.status(status).json(body);
     }
 }
