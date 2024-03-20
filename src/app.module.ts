@@ -7,6 +7,7 @@ import { LoggingInterceptor } from './interceptors';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
@@ -35,6 +36,7 @@ import { DataSource } from 'typeorm';
                 return addTransactionalDataSource(new DataSource(options));
             },
         }),
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [
